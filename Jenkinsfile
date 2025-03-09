@@ -17,7 +17,7 @@ pipeline {
     post {
         always {
             script {
-                def durationSec = currentBuild.duration ? currentBuild.duration  1000 : 'N/A'
+                def durationSec = currentBuild.duration ? currentBuild.duration / 1000 : 'N/A'
                 def jobInfo = [
                     jobNumber: currentBuild.number,
                     repo: env.JOB_NAME,
