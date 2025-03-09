@@ -2,13 +2,9 @@ pipeline {
     agent any
     parameters {
         // El token se recibe como parámetro para asegurar que se use el mismo en el callback.
-        string(name: 'WEBHOOK_TOKEN', defaultValue: '', description: 'Token para el callback')
+        string(name: 'CALLBACK_URL', description: 'Call back URL')
     }
-    environment {
-        // Definir la URL del callback: debe coincidir con el endpoint configurado en el primer pipeline.
-        // Aquí se asume que el endpoint es el expuesto por el plugin Webhook Step.
-        CALLBACK_URL = "https://jenkins.moradores.es/webhook?token=${params.WEBHOOK_TOKEN}"
-    }
+    
     stages {
         stage('Ejecución del Segundo Pipeline') {
             steps {
@@ -21,7 +17,7 @@ pipeline {
     post {
         always {
             script {
-                def durationSec = currentBuild.duration ? currentBuild.duration / 1000 : 'N/A'
+                def durationSec = currentBuild.duration ? currentBuild.duration  1000 : 'N/A'
                 def jobInfo = [
                     jobNumber: currentBuild.number,
                     repo: env.JOB_NAME,
@@ -29,12 +25,12 @@ pipeline {
                     status: currentBuild.currentResult
                 ]
                 def jsonJobInfo = groovy.json.JsonOutput.toJson(jobInfo)
-                echo "Enviando callback al endpoint: ${env.CALLBACK_URL}"
+                echo "Enviando callback al endpoint: ${params.CALLBACK_URL}"
                 
-                // Se envía el callback usando httpRequest (asegúrate de tener instalado el plugin HTTP Request)
+                // Se envía el callback usando httpRequest 
                 httpRequest(
                     httpMode: 'POST',
-                    url: env.CALLBACK_URL,
+                    url: params.CALLBACK_URL,
                     requestBody: jsonJobInfo,
                     contentType: 'APPLICATION_JSON',
                     validResponseCodes: '200,201,202,204',
