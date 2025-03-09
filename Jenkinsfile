@@ -10,7 +10,7 @@ pipeline {
             steps {
                 echo "Ejecutando Segundo Pipeline..."
                 // Simulación de trabajo (por ejemplo, compilación, pruebas, etc.)
-                sleep time: 30, unit: 'SECONDS'
+                sleep time: 5, unit: 'SECONDS'
             }
         }
     }
@@ -35,7 +35,8 @@ pipeline {
                     requestBody: jsonJobInfo,
                     contentType: 'APPLICATION_JSON',
                     validResponseCodes: '200',
-                    useCrumb: true
+                    useCrumb: true,
+                    authentication: 'jenkins-api-credentials'
                 )
             }
         }
