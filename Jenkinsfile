@@ -4,7 +4,7 @@ pipeline {
         // URL del callback: se usa la URL interna de Jenkins para disparar el job del primer repositorio.
         // Asegúrate de que el job del primer repositorio tenga configurado el token 'myToken'
         CALLBACK_URL = "https://jenkins.moradores.es/job/Detonador/job/detonador/job/develop/build?token=myToken"
-        API_TOKEN = credentials('jenkins-api-credentials')
+        //API_TOKEN = credentials('jenkins-api-credentials')
     }
     stages {
         stage('Ejecución del Segundo Pipeline') {
@@ -36,7 +36,7 @@ pipeline {
                     requestBody: jsonJobInfo,
                     contentType: 'APPLICATION_JSON',
                     validResponseCodes: '200',
-                    authentication: "${API_TOKEN}"
+                    authentication: 'jenkins-api-credentials2'
                 )
             }
         }
