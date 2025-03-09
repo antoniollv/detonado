@@ -34,7 +34,8 @@ pipeline {
                     url: env.CALLBACK_URL,
                     requestBody: jsonJobInfo,
                     contentType: 'APPLICATION_JSON',
-                    validResponseCodes: '200'
+                    validResponseCodes: '200',
+                    useCrumb: true
                 )
             }
         }
