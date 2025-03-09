@@ -14,7 +14,7 @@ pipeline {
             script {
                 // Calcula el tiempo empleado en segundos (currentBuild.duration está en milisegundos)
                 def durationSec = currentBuild.duration ? currentBuild.duration / 1000 : "N/A"
-                echo "Resumen del Segundo Pipeline:"
+                echo "Resumen del Pipeline:"
                 echo "Job Number: ${currentBuild.number}, Repo: ${env.JOB_NAME}, Duration: ${durationSec} seg, Status: ${currentBuild.currentResult}"
             }
         }
