@@ -36,7 +36,6 @@ pipeline {
                     requestBody: jsonJobInfo,
                     contentType: 'APPLICATION_JSON',
                     validResponseCodes: '200',
-                    useCrumb: true,
                     authentication: "${API_TOKEN}"
                 )
             }
