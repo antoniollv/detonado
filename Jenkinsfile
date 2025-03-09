@@ -10,7 +10,7 @@ pipeline {
             steps {
                 echo "Ejecutando el segundo pipeline..."
                 // Simulación de trabajo
-                sleep time: 30, unit: 'SECONDS'
+                sleep time: 3, unit: 'SECONDS'
             }
         }
     }
