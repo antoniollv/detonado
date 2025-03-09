@@ -1,14 +1,12 @@
 pipeline {
     agent any
     parameters {
-        // El token se recibe como parámetro para asegurar que se use el mismo en el callback.
         string(name: 'CALLBACK_URL', description: 'Call back URL')
     }
-    
     stages {
         stage('Ejecución del Segundo Pipeline') {
             steps {
-                echo "Ejecutando el segundo pipeline..."
+                echo 'Ejecutando pipeline...'
                 // Simulación de trabajo
                 sleep time: 3, unit: 'SECONDS'
             }
@@ -25,12 +23,11 @@ pipeline {
                     status: currentBuild.currentResult
                 ]
                 def jsonJobInfo = groovy.json.JsonOutput.toJson(jobInfo)
-                echo "Enviando callback al endpoint: ${params.CALLBACK_URL}"
-                
-                // Se envía el callback usando httpRequest 
+                def secureURL = params.CALLBACK_URL.replaceFirst('^http://', 'https://')
+                echo "Enviando callback al endpoint: ${secureURL}"
                 httpRequest(
                     httpMode: 'POST',
-                    url: params.CALLBACK_URL,
+                    url: secureURL,
                     requestBody: jsonJobInfo,
                     contentType: 'APPLICATION_JSON',
                     validResponseCodes: '200,201,202,204',
@@ -40,4 +37,3 @@ pipeline {
         }
     }
 }
-
